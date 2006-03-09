@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.shelljunkie.com" xmlns="http://www.shelljunkie.com">
+
+<xs:simpleType name="idType">
+  <xs:restriction base="xs:integer">
+	  <xs:minInclusive value="1"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="propertyType">
+	<xs:attribute name="name" type="xs:string" use="required"/>
+	<xs:attribute name="value" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="pipelineElementType">
+	<xs:sequence>
+		<xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="unbounded"/>
+	</xs:sequence>
+	<xs:attribute name="id" type="idType" use="required"/>
+	<xs:attribute name="name" type="xs:string" use="optional"/>
+	<xs:attribute name="classname" type="xs:string" use="required"/>
+	<xs:attribute name="pipeclassname" type="xs:string" use="optional"/>
+</xs:complexType>
+
+<xs:complexType name="pipeType">
+	<xs:attribute name="id" type="idType" use="required"/>
+	<xs:attribute name="name" type="xs:string" use="optional"/>
+	<xs:attribute name="source" type="idType" use="required"/>
+	<xs:attribute name="sink" type="idType" use="required"/>
+</xs:complexType>
+
+<xs:element name="pipeline">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="source" type="pipelineElementType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="filter" type="pipelineElementType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="sink" type="pipelineElementType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="pipe" type="pipeType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>
